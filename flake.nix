@@ -10,8 +10,8 @@
             };
         };
     };
-    outputs = { self, nixpkgs, flake-utils, rust-overlay }: 
-        flake-utils.lib.eachDefaultSystem 
+    outputs = { self, nixpkgs, flake-utils, rust-overlay, ... }:
+        flake-utils.lib.eachDefaultSystem
             (system:
                 let
                     overlays = [ (import rust-overlay) ];
@@ -20,12 +20,23 @@
                     };
                     rustToolchain = pkgs.pkgsBuildHost.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
                     nativeBuildInputs = with pkgs; [ rustToolchain ];
-                    buildInputs = with pkgs; [ ];
+                    buildInputs = with pkgs; [
+                        bashInteractive
+                        probe-rs
+                        elf2uf2-rs
+                        flip-link
+                        cargo-binutils
+                        libusb1
+                        picotool
+                     ];
                 in
                 with pkgs;
                 {
                     devShells.default = mkShell {
                         inherit buildInputs nativeBuildInputs;
+                        shellHook = ''
+                        export SHELL=/run/current-system/sw/bin/bash
+                        '';
                     };
                 }
             );

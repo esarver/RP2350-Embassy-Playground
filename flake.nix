@@ -23,11 +23,11 @@
                     buildInputs = with pkgs; [
                         bashInteractive
                         probe-rs
-                        elf2uf2-rs
-                        flip-link
                         cargo-binutils
                         libusb1
-                        picotool
+                        # elf2uf2-rs
+                        # flip-link
+                        # picotool
                      ];
                 in
                 with pkgs;

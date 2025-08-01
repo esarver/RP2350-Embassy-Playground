@@ -3,7 +3,6 @@
 
 use core::sync::atomic::{AtomicBool, Ordering};
 
-use cortex_m::prelude::_embedded_hal_blocking_delay_DelayMs;
 use defmt::{info, warn};
 use embassy_executor::Spawner;
 use embassy_futures::join::join;
@@ -13,7 +12,7 @@ use embassy_rp::{
     peripherals::USB,
     usb::{Driver, InterruptHandler},
 };
-use embassy_time::{Delay, Timer};
+use embassy_time::Timer;
 
 use embassy_usb::{
     Builder, Config, Handler,
